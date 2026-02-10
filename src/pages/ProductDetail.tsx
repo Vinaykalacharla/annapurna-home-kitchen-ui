@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 import { Minus, Plus, ShoppingCart, ArrowLeft } from "lucide-react";
+import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { toast } from "sonner";
@@ -33,21 +34,33 @@ const ProductDetail = () => {
 
   return (
     <main className="container mx-auto px-4 py-10 md:py-16">
-      <Link
-        to={`/products/${product.category}`}
-        className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8 text-sm"
-      >
-        <ArrowLeft className="w-4 h-4" /> Back to {product.category}
-      </Link>
+      <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4 }}>
+        <Link
+          to={`/products/${product.category}`}
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8 text-sm"
+        >
+          <ArrowLeft className="w-4 h-4" /> Back to {product.category}
+        </Link>
+      </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
         {/* Image */}
-        <div className="aspect-square rounded-2xl overflow-hidden bg-muted">
+        <motion.div
+          className="aspect-square rounded-2xl overflow-hidden bg-muted"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] as const }}
+        >
           <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-        </div>
+        </motion.div>
 
         {/* Details */}
-        <div className="flex flex-col">
+        <motion.div
+          className="flex flex-col"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] as const }}
+        >
           <div className="flex items-center gap-2 mb-3">
             <span className={`px-3 py-1 rounded-full text-xs font-medium ${spiceBadgeColors[product.spiceLevel]}`}>
               {product.spiceLevel.toUpperCase()}
@@ -84,7 +97,12 @@ const ProductDetail = () => {
           </div>
 
           {/* Product Info */}
-          <div className="space-y-4 border-t border-border pt-6">
+          <motion.div
+            className="space-y-4 border-t border-border pt-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          >
             <div>
               <h3 className="font-heading font-semibold text-foreground mb-1">Ingredients</h3>
               <p className="text-sm text-muted-foreground">{product.ingredients}</p>
@@ -97,8 +115,8 @@ const ProductDetail = () => {
               <h3 className="font-heading font-semibold text-foreground mb-1">Storage</h3>
               <p className="text-sm text-muted-foreground">{product.storage}</p>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </main>
   );
