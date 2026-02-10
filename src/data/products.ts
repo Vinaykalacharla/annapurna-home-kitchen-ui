@@ -1,3 +1,16 @@
+import productAvakaya from "@/assets/product-avakaya.jpg";
+import productLemonPickle from "@/assets/product-lemon-pickle.jpg";
+import productGongura from "@/assets/product-gongura.jpg";
+import productTomatoPickle from "@/assets/product-tomato-pickle.jpg";
+import productRiceSandige from "@/assets/product-rice-sandige.jpg";
+import productUradOdiyalu from "@/assets/product-urad-odiyalu.jpg";
+import productSaggubiyyam from "@/assets/product-saggubiyyam.jpg";
+import productKandiPodi from "@/assets/product-kandi-podi.jpg";
+import productNuvvulaPodi from "@/assets/product-nuvvula-podi.jpg";
+import productKarapodi from "@/assets/product-karapodi.jpg";
+import productBellamGavvalu from "@/assets/product-bellam-gavvalu.jpg";
+import productChegodilu from "@/assets/product-chegodilu.jpg";
+
 export interface Product {
   id: string;
   name: string;
@@ -27,7 +40,7 @@ export const products: Product[] = [
     category: "pickles",
     price: 299,
     weight: "500g",
-    image: "/placeholder.svg",
+    image: productAvakaya,
     description: "Traditional Andhra-style raw mango pickle made with hand-pounded spices, mustard, and cold-pressed sesame oil. A fiery, tangy delight passed down through generations.",
     ingredients: "Raw mango, red chili powder, mustard seeds, fenugreek, salt, sesame oil",
     shelfLife: "12 months",
@@ -41,7 +54,7 @@ export const products: Product[] = [
     category: "pickles",
     price: 249,
     weight: "400g",
-    image: "/placeholder.svg",
+    image: productLemonPickle,
     description: "Sun-ripened lemons marinated in a fragrant blend of spices. Perfectly tangy and mildly spiced for everyday meals.",
     ingredients: "Lemon, red chili powder, turmeric, mustard seeds, salt, sesame oil",
     shelfLife: "10 months",
@@ -55,7 +68,7 @@ export const products: Product[] = [
     category: "pickles",
     price: 279,
     weight: "500g",
-    image: "/placeholder.svg",
+    image: productGongura,
     description: "Sorrel leaves (gongura) cooked with green chilies and tempered with garlic. An authentic Andhra specialty.",
     ingredients: "Gongura leaves, green chili, garlic, mustard, salt, oil",
     shelfLife: "8 months",
@@ -69,7 +82,7 @@ export const products: Product[] = [
     category: "pickles",
     price: 199,
     weight: "350g",
-    image: "/placeholder.svg",
+    image: productTomatoPickle,
     description: "Sweet and tangy tomato pickle with a hint of jaggery. A family favorite that pairs well with rice and roti.",
     ingredients: "Tomato, jaggery, red chili, mustard, salt, oil",
     shelfLife: "6 months",
@@ -83,7 +96,7 @@ export const products: Product[] = [
     category: "odiyalu",
     price: 189,
     weight: "250g",
-    image: "/placeholder.svg",
+    image: productRiceSandige,
     description: "Crispy sun-dried rice crackers made from a special rice batter. Perfect as a crunchy side dish when deep fried.",
     ingredients: "Rice flour, cumin, sesame seeds, salt",
     shelfLife: "6 months",
@@ -97,7 +110,7 @@ export const products: Product[] = [
     category: "odiyalu",
     price: 219,
     weight: "250g",
-    image: "/placeholder.svg",
+    image: productUradOdiyalu,
     description: "Sun-dried urad dal dumplings with black pepper and curry leaves. Fry for a golden, crunchy accompaniment.",
     ingredients: "Urad dal, black pepper, curry leaves, salt",
     shelfLife: "8 months",
@@ -111,7 +124,7 @@ export const products: Product[] = [
     category: "odiyalu",
     price: 199,
     weight: "200g",
-    image: "/placeholder.svg",
+    image: productSaggubiyyam,
     description: "Delicate sago-based sun-dried wafers. Light, airy, and incredibly crispy when fried.",
     ingredients: "Sago, cumin, green chili, salt",
     shelfLife: "6 months",
@@ -125,7 +138,7 @@ export const products: Product[] = [
     category: "podilu",
     price: 179,
     weight: "200g",
-    image: "/placeholder.svg",
+    image: productKandiPodi,
     description: "Roasted toor dal powder with red chilies and garlic. Mix with rice and ghee for an instant, flavorful meal.",
     ingredients: "Toor dal, red chili, garlic, salt",
     shelfLife: "4 months",
@@ -139,7 +152,7 @@ export const products: Product[] = [
     category: "podilu",
     price: 199,
     weight: "200g",
-    image: "/placeholder.svg",
+    image: productNuvvulaPodi,
     description: "Fragrant sesame seed powder with dry red chilies. Rich in nutrients, perfect with hot rice and a drizzle of ghee.",
     ingredients: "Sesame seeds, red chili, salt, cumin",
     shelfLife: "4 months",
@@ -153,7 +166,7 @@ export const products: Product[] = [
     category: "podilu",
     price: 159,
     weight: "200g",
-    image: "/placeholder.svg",
+    image: productKarapodi,
     description: "Spicy gunpowder chutney podi made with roasted gram and red chilies. A staple in every South Indian household.",
     ingredients: "Roasted gram, red chili, garlic, tamarind, salt",
     shelfLife: "5 months",
@@ -167,7 +180,7 @@ export const products: Product[] = [
     category: "special",
     price: 349,
     weight: "300g",
-    image: "/placeholder.svg",
+    image: productBellamGavvalu,
     description: "Shell-shaped sweet snack coated in jaggery syrup. A beloved traditional Andhra sweet perfect for festivals.",
     ingredients: "Wheat flour, jaggery, ghee, cardamom",
     shelfLife: "2 months",
@@ -181,7 +194,7 @@ export const products: Product[] = [
     category: "special",
     price: 249,
     weight: "250g",
-    image: "/placeholder.svg",
+    image: productChegodilu,
     description: "Crunchy ring-shaped savory snack made with rice flour and sesame seeds. The perfect tea-time companion.",
     ingredients: "Rice flour, sesame seeds, cumin, butter, salt",
     shelfLife: "3 months",
