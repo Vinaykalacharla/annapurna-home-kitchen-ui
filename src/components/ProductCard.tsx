@@ -22,12 +22,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
       to={`/product/${product.id}`}
       className="group bg-card rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col"
     >
-      <div className="aspect-square overflow-hidden bg-muted">
-        <img
-          src={product.image}
-          alt={product.name}
+      <div className="aspect-square overflow-hidden bg-muted relative">
+        <video
+          src={product.video}
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster={product.image}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          loading="lazy"
         />
       </div>
       <div className="p-4 md:p-5 flex flex-col flex-1">
