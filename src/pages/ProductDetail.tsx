@@ -51,7 +51,15 @@ const ProductDetail = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] as const }}
         >
-          <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+          <video
+            src={product.video}
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster={product.image}
+            className="w-full h-full object-cover"
+          />
         </motion.div>
 
         {/* Details */}
