@@ -1,10 +1,16 @@
 import { useParams } from "react-router-dom";
 import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
 import { products, categories } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
 
 type SpiceFilter = "all" | "mild" | "medium" | "hot";
 type SortOption = "default" | "low" | "high";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const } },
+};
 
 const Products = () => {
   const { category } = useParams<{ category: string }>();
@@ -24,15 +30,20 @@ const Products = () => {
 
   return (
     <main className="container mx-auto px-4 py-10 md:py-16">
-      <div className="mb-10">
+      <motion.div className="mb-10" initial="hidden" animate="visible" variants={fadeUp}>
         <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground">{title}</h1>
         <p className="text-muted-foreground mt-2">
           {filtered.length} product{filtered.length !== 1 ? "s" : ""} available
         </p>
-      </div>
+      </motion.div>
 
       {/* Filters */}
-      <div className="flex flex-wrap gap-3 mb-8">
+      <motion.div
+        className="flex flex-wrap gap-3 mb-8"
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium text-muted-foreground">Spice:</span>
           {(["all", "mild", "medium", "hot"] as SpiceFilter[]).map((level) => (
@@ -61,14 +72,21 @@ const Products = () => {
             <option value="high">Price: High to Low</option>
           </select>
         </div>
-      </div>
+      </motion.div>
 
       {filtered.length === 0 ? (
         <p className="text-center text-muted-foreground py-20">No products found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filtered.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {filtered.map((product, i) => (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 + i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] as const }}
+            >
+              <ProductCard product={product} />
+            </motion.div>
           ))}
         </div>
       )}

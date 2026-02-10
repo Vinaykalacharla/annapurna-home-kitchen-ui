@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Leaf, Heart, Shield, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 import heroBanner from "@/assets/hero-banner.jpg";
 import picklesImg from "@/assets/category-pickles.jpg";
 import odiyaluImg from "@/assets/category-odiyalu.jpg";
@@ -19,25 +20,73 @@ const whyChoose = [
   { icon: Shield, title: "Authentic Taste", desc: "Recipes passed down through generations, preserving the true South Indian flavors." },
 ];
 
+const ease = [0.25, 0.46, 0.45, 0.94] as const;
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease, delay: i * 0.15 },
+  }),
+};
+
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease } },
+};
+
 const Index = () => {
   return (
     <main>
       {/* Hero */}
-      <section className="relative min-h-[80vh] flex items-center">
-        <div className="absolute inset-0">
+      <section className="relative min-h-[80vh] flex items-center overflow-hidden">
+        <motion.div
+          className="absolute inset-0"
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.4, ease }}
+        >
           <img src={heroBanner} alt="Traditional South Indian food spread" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/50 to-transparent" />
-        </div>
+        </motion.div>
         <div className="relative container mx-auto px-4 py-20 md:py-32">
-          <div className="max-w-xl animate-fade-in-up">
-            <p className="text-secondary font-medium tracking-widest uppercase text-sm mb-4">Annapurna Home Foods</p>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-primary-foreground leading-tight mb-6">
+          <div className="max-w-xl">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-secondary font-medium tracking-widest uppercase text-sm mb-4"
+            >
+              Annapurna Home Foods
+            </motion.p>
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+              className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-primary-foreground leading-tight mb-6"
+            >
               Cooking With Love
-            </h1>
-            <p className="text-primary-foreground/80 text-lg md:text-xl leading-relaxed mb-8 max-w-md">
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="text-primary-foreground/80 text-lg md:text-xl leading-relaxed mb-8 max-w-md"
+            >
               Authentic South Indian homemade foods crafted with tradition, care, and the finest natural ingredients.
-            </p>
-            <div className="flex flex-wrap gap-4">
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.9 }}
+              className="flex flex-wrap gap-4"
+            >
               <Link
                 to="/products/pickles"
                 className="bg-secondary text-secondary-foreground px-8 py-3.5 rounded-xl font-semibold text-base hover:opacity-90 transition-opacity inline-flex items-center gap-2"
@@ -50,60 +99,96 @@ const Index = () => {
               >
                 Explore Products
               </Link>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Categories */}
       <section className="container mx-auto px-4 py-16 md:py-24">
-        <div className="text-center mb-12">
+        <motion.div
+          className="text-center mb-12"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeUp}
+          custom={0}
+        >
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-3">Our Collections</h2>
           <p className="text-muted-foreground max-w-md mx-auto">Explore our range of authentic South Indian homemade products</p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        </motion.div>
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={staggerContainer}
+        >
           {categoryCards.map((cat, i) => (
-            <Link
-              key={cat.slug}
-              to={`/products/${cat.slug}`}
-              className="group relative aspect-[4/5] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
-              style={{ animationDelay: `${i * 100}ms` }}
-            >
-              <img src={cat.image} alt={cat.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
-                <h3 className="font-heading text-xl md:text-2xl font-bold text-primary-foreground mb-1">{cat.name}</h3>
-                <p className="text-primary-foreground/70 text-sm">{cat.desc}</p>
-              </div>
-            </Link>
+            <motion.div key={cat.slug} variants={fadeUp} custom={i}>
+              <Link
+                to={`/products/${cat.slug}`}
+                className="group relative aspect-[4/5] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 block"
+              >
+                <img src={cat.image} alt={cat.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
+                  <h3 className="font-heading text-xl md:text-2xl font-bold text-primary-foreground mb-1">{cat.name}</h3>
+                  <p className="text-primary-foreground/70 text-sm">{cat.desc}</p>
+                </div>
+              </Link>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* Why Choose Us */}
       <section className="bg-card">
         <div className="container mx-auto px-4 py-16 md:py-24">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUp}
+            custom={0}
+          >
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-3">Why Choose Us</h2>
             <p className="text-muted-foreground max-w-md mx-auto">What makes Annapurna Home Foods special</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {whyChoose.map((item) => (
-              <div key={item.title} className="bg-background rounded-2xl p-8 text-center shadow-sm hover:shadow-md transition-shadow">
+          </motion.div>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+          >
+            {whyChoose.map((item, i) => (
+              <motion.div
+                key={item.title}
+                variants={scaleIn}
+                className="bg-background rounded-2xl p-8 text-center shadow-sm hover:shadow-md transition-shadow"
+              >
                 <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-5">
                   <item.icon className="w-7 h-7 text-primary" />
                 </div>
                 <h3 className="font-heading text-xl font-semibold text-foreground mb-3">{item.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* CTA Banner */}
       <section className="container mx-auto px-4 py-16 md:py-24">
-        <div className="bg-primary rounded-3xl p-8 md:p-16 text-center">
+        <motion.div
+          className="bg-primary rounded-3xl p-8 md:p-16 text-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={scaleIn}
+        >
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary-foreground mb-4">
             Taste the Tradition
           </h2>
@@ -116,7 +201,7 @@ const Index = () => {
           >
             Shop Now <ArrowRight className="w-4 h-4" />
           </Link>
-        </div>
+        </motion.div>
       </section>
     </main>
   );

@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { MapPin, Phone, Mail } from "lucide-react";
+import { motion } from "framer-motion";
 import { toast } from "sonner";
+
+const ease = [0.25, 0.46, 0.45, 0.94] as const;
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
+};
 
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -15,17 +23,34 @@ const Contact = () => {
     <main>
       <section className="bg-card">
         <div className="container mx-auto px-4 py-16 md:py-24 text-center">
-          <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-4">Contact Us</h1>
-          <p className="text-muted-foreground max-w-lg mx-auto text-lg">
+          <motion.h1
+            className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            Contact Us
+          </motion.h1>
+          <motion.p
+            className="text-muted-foreground max-w-lg mx-auto text-lg"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             We'd love to hear from you. Reach out for orders, feedback, or just to say hello!
-          </p>
+          </motion.p>
         </div>
       </section>
 
       <section className="container mx-auto px-4 py-16 md:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Form */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease }}
+          >
             <h2 className="text-2xl font-heading font-bold text-foreground mb-6">Send us a message</h2>
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
@@ -68,46 +93,52 @@ const Contact = () => {
                 Send Message
               </button>
             </form>
-          </div>
+          </motion.div>
 
           {/* Info */}
-          <div className="space-y-8 lg:pl-8">
+          <motion.div
+            className="space-y-8 lg:pl-8"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.15, ease }}
+          >
             <h2 className="text-2xl font-heading font-bold text-foreground mb-6">Get in touch</h2>
             <div className="space-y-6">
-              <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">Our Location</h3>
-                  <p className="text-sm text-muted-foreground">Near Kanaka Durga Temple,<br />Vijayawada, Andhra Pradesh 520001</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">Phone</h3>
-                  <p className="text-sm text-muted-foreground">+91 98765 43210</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">Email</h3>
-                  <p className="text-sm text-muted-foreground">hello@annapurnahomefoods.com</p>
-                </div>
-              </div>
+              {[
+                { Icon: MapPin, title: "Our Location", text: "Near Kanaka Durga Temple,\nVijayawada, Andhra Pradesh 520001" },
+                { Icon: Phone, title: "Phone", text: "+91 98765 43210" },
+                { Icon: Mail, title: "Email", text: "hello@annapurnahomefoods.com" },
+              ].map(({ Icon, title, text }, i) => (
+                <motion.div
+                  key={title}
+                  className="flex gap-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
+                >
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground">{title}</h3>
+                    <p className="text-sm text-muted-foreground whitespace-pre-line">{text}</p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
 
-            {/* Map placeholder */}
-            <div className="rounded-2xl overflow-hidden bg-muted aspect-video flex items-center justify-center">
+            <motion.div
+              className="rounded-2xl overflow-hidden bg-muted aspect-video flex items-center justify-center"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+            >
               <p className="text-muted-foreground text-sm">📍 Map • Vijayawada, Andhra Pradesh</p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
     </main>
