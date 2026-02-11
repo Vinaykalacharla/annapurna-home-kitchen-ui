@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Leaf, Heart, Shield, ArrowRight, Star, Truck, Clock, Award, Quote } from "lucide-react";
 import { motion } from "framer-motion";
@@ -288,7 +289,7 @@ const Index = () => {
             </p>
             <div className="grid grid-cols-3 gap-6 mb-8">
               <div className="text-center">
-                <p className="font-heading text-2xl md:text-3xl font-bold text-primary">12+</p>
+                <p className="font-heading text-2xl md:text-3xl font-bold text-primary">24+</p>
                 <p className="text-muted-foreground text-xs mt-1">Products</p>
               </div>
               <div className="text-center">
@@ -442,7 +443,7 @@ const Index = () => {
   );
 };
 
-/* Reusable Category Showcase Component */
+/* Reusable Category Showcase Component — single-row horizontal scroll */
 const CategoryShowcase = ({
   title,
   subtitle,
@@ -455,43 +456,73 @@ const CategoryShowcase = ({
   products: typeof products;
   categorySlug: string;
   bgClass?: string;
-}) => (
-  <section className={bgClass}>
-    <div className="container mx-auto px-4 py-16 md:py-24">
-      <motion.div
-        className="flex flex-col md:flex-row md:items-end md:justify-between mb-10 gap-4"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-        variants={fadeUp}
-        custom={0}
-      >
-        <div>
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-2">{title}</h2>
-          <p className="text-muted-foreground max-w-md">{subtitle}</p>
-        </div>
-        <Link
-          to={`/products/${categorySlug}`}
-          className="text-primary font-semibold inline-flex items-center gap-2 hover:gap-3 transition-all text-sm shrink-0"
+}) => {
+  const [dragConstraint, setDragConstraint] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateConstraint = () => {
+      if (containerRef.current && scrollRef.current) {
+        const scrollW = scrollRef.current.scrollWidth;
+        const containerW = containerRef.current.offsetWidth;
+        setDragConstraint(Math.min(0, -(scrollW - containerW)));
+      }
+    };
+    updateConstraint();
+    window.addEventListener("resize", updateConstraint);
+    return () => window.removeEventListener("resize", updateConstraint);
+  }, [categoryProducts]);
+
+  return (
+    <section className={bgClass}>
+      <div className="container mx-auto px-4 py-16 md:py-24">
+        <motion.div
+          className="flex flex-col md:flex-row md:items-end md:justify-between mb-10 gap-4"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeUp}
+          custom={0}
         >
-          View All <ArrowRight className="w-4 h-4" />
-        </Link>
-      </motion.div>
-      <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={staggerContainer}
-      >
-        {categoryProducts.map((product, i) => (
-          <motion.div key={product.id} variants={fadeUp} custom={i}>
-            <ProductCard product={product} />
+          <div>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-2">{title}</h2>
+            <p className="text-muted-foreground max-w-md">{subtitle}</p>
+          </div>
+          <Link
+            to={`/products/${categorySlug}`}
+            className="text-primary font-semibold inline-flex items-center gap-2 hover:gap-3 transition-all text-sm shrink-0"
+          >
+            View All <ArrowRight className="w-4 h-4" />
+          </Link>
+        </motion.div>
+        <div ref={containerRef} className="overflow-hidden cursor-grab active:cursor-grabbing">
+          <motion.div
+            ref={scrollRef}
+            className="flex gap-6"
+            drag="x"
+            dragConstraints={{ left: dragConstraint, right: 0 }}
+            dragElastic={0.1}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={staggerContainer}
+          >
+            {categoryProducts.map((product, i) => (
+              <motion.div
+                key={product.id}
+                variants={fadeUp}
+                custom={i}
+                className="min-w-[260px] sm:min-w-[280px] md:min-w-[300px] flex-shrink-0"
+              >
+                <ProductCard product={product} />
+              </motion.div>
+            ))}
           </motion.div>
-        ))}
-      </motion.div>
-    </div>
-  </section>
-);
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default Index;
