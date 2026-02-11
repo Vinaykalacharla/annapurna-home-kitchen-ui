@@ -1,9 +1,16 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Star, BadgeCheck, ChevronDown, Loader2 } from "lucide-react";
+import { Star, BadgeCheck, Loader2 } from "lucide-react";
 import { Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { toast } from "sonner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface ProductCardProps {
   product: Product;
@@ -60,7 +67,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   const [selectedWeight, setSelectedWeight] = useState(weightOptions[0]);
   const [isAdding, setIsAdding] = useState(false);
-  const [isSelectFocused, setIsSelectFocused] = useState(false);
 
   const handleAdd = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -117,31 +123,30 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </span>
         </div>
 
-        <div className="relative">
-          <select
-            value={selectedWeight}
-            onChange={(e) => setSelectedWeight(e.target.value)}
-            onFocus={() => setIsSelectFocused(true)}
-            onBlur={() => setIsSelectFocused(false)}
-            className={`h-11 w-full appearance-none rounded-[12px] border px-3 pr-10 text-[14px] font-medium text-[#111111] outline-none transition-[border-color,box-shadow,background-color] ${
-              isSelectFocused
-                ? "border-[#1FAFAF] bg-white shadow-[0_0_0_3px_rgba(31,175,175,0.12)]"
-                : "border-[#E5E5E5] bg-[#F9F9F9]"
-            }`}
-            onClick={(e) => e.stopPropagation()}
+        <Select value={selectedWeight} onValueChange={setSelectedWeight}>
+          <SelectTrigger
+            className="relative h-11 w-full rounded-[12px] border border-[#E5E5E5] bg-[#F9F9F9] px-3 pr-10 text-[14px] font-medium text-[#111111] transition-[border-color,box-shadow,background-color,transform] duration-300 hover:border-[#7ad6d6] hover:bg-white data-[state=open]:border-[#1FAFAF] data-[state=open]:bg-white data-[state=open]:shadow-[0_0_0_3px_rgba(31,175,175,0.14),0_14px_24px_-16px_rgba(31,175,175,0.9)] data-[state=open]:-translate-y-[1px] before:pointer-events-none before:absolute before:-left-4 before:top-1/2 before:h-7 before:w-7 before:-translate-y-1/2 before:rounded-full before:bg-[#1FAFAF]/20 before:blur-xl after:pointer-events-none after:absolute after:inset-x-4 after:bottom-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-[#1FAFAF]/60 after:to-transparent [&>span]:line-clamp-1 [&_svg]:h-4 [&_svg]:w-4 [&_svg]:text-[#5f6a6a] [&_svg]:transition-transform [&_svg]:duration-300 data-[state=open]:[&_svg]:rotate-180"
+            aria-label={`Select weight for ${product.name}`}
+          >
+            <SelectValue placeholder="Select weight" />
+          </SelectTrigger>
+
+          <SelectContent
+            position="popper"
+            sideOffset={8}
+            className="z-[70] w-[var(--radix-select-trigger-width)] rounded-2xl border border-[#c5ece9] bg-white/98 p-1.5 text-[#1d2e2e] backdrop-blur-xl shadow-[0_24px_40px_-22px_rgba(9,86,86,0.55)] data-[state=open]:slide-in-from-top-3 data-[state=open]:zoom-in-95"
           >
             {weightOptions.map((option) => (
-              <option key={`${product.id}-${option}`} value={option}>
+              <SelectItem
+                key={`${product.id}-${option}`}
+                value={option}
+                className="min-h-10 cursor-pointer rounded-xl py-2.5 pl-8 pr-3 text-[14px] font-medium outline-none transition-all duration-200 focus:bg-[#eaf9f8] focus:text-[#105d57] data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-[#1FAFAF]/15 data-[state=checked]:to-[#1FAFAF]/5 data-[state=checked]:text-[#0f6159]"
+              >
                 {option}
-              </option>
+              </SelectItem>
             ))}
-          </select>
-          <ChevronDown
-            className={`pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6B6B6B] transition-transform duration-200 ${
-              isSelectFocused ? "rotate-180" : ""
-            }`}
-          />
-        </div>
+          </SelectContent>
+        </Select>
 
         <button
           onClick={handleAdd}
