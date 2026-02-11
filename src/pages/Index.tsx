@@ -588,7 +588,8 @@ const CategoryShowcase = ({
 
   const [itemsPerView, setItemsPerView] = useState(getItemsPerView);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isHoverPaused, setIsHoverPaused] = useState(false);
+  const [isUserPaused, setIsUserPaused] = useState(false);
 
   const totalItems = Math.max(1, categoryProducts.length);
   const visibleItems = Math.min(itemsPerView, Math.max(1, categoryProducts.length));
@@ -603,19 +604,34 @@ const CategoryShowcase = ({
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    // On touch-first devices, keep slider manual so users can inspect products.
+    if (window.matchMedia("(hover: none)").matches) {
+      setIsUserPaused(true);
+    }
+  }, []);
+
+  useEffect(() => {
     setActiveIndex((prev) => Math.min(prev, maxIndex));
   }, [maxIndex]);
 
   useEffect(() => {
-    if (!showSliderControls || isPaused) return;
+    if (!showSliderControls || isHoverPaused || isUserPaused) return;
     const timer = window.setInterval(() => {
       setActiveIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
-    }, 2800);
+    }, 3600);
     return () => window.clearInterval(timer);
-  }, [maxIndex, showSliderControls, isPaused]);
+  }, [maxIndex, showSliderControls, isHoverPaused, isUserPaused]);
 
-  const goPrev = () => setActiveIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
-  const goNext = () => setActiveIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+  const pauseForManualControl = () => setIsUserPaused(true);
+  const goPrev = () => {
+    pauseForManualControl();
+    setActiveIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+  };
+  const goNext = () => {
+    pauseForManualControl();
+    setActiveIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+  };
 
   return (
     <section className={bgClass}>
@@ -661,8 +677,10 @@ const CategoryShowcase = ({
         </motion.div>
         <div
           className="overflow-hidden"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
+          onMouseEnter={() => setIsHoverPaused(true)}
+          onMouseLeave={() => setIsHoverPaused(false)}
+          onTouchStart={pauseForManualControl}
+          onWheel={pauseForManualControl}
         >
           <motion.div
             className="flex -mx-2 sm:-mx-3"
