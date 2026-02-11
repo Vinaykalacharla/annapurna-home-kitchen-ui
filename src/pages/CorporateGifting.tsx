@@ -122,6 +122,15 @@ const processSteps = [
   "Dispatch with live tracking and post-delivery closure report.",
 ];
 
+const internationalDispatchLanes = [
+  { code: "US", route: "Hyderabad to New York", state: "Customs review", eta: "ETA 72h" },
+  { code: "UK", route: "Chennai to London", state: "Air uplifted", eta: "ETA 48h" },
+  { code: "UAE", route: "Bengaluru to Dubai", state: "Customs cleared", eta: "ETA 24h" },
+  { code: "SG", route: "Mumbai to Singapore", state: "Final mile handoff", eta: "ETA 36h" },
+];
+
+const globalLanePills = ["US", "UK", "UAE", "SG", "CA", "AU", "DE", "FR"];
+
 const testimonials = [
   "Loved how they curated premium packs within our budget and timeline.",
   "The custom message cards made the gifting feel personal and warm.",
@@ -264,74 +273,162 @@ const CorporateGifting = () => {
           <div className="absolute -bottom-14 right-8 w-72 h-72 rounded-full border border-primary-foreground/25" />
         </div>
         <div className="relative container mx-auto px-4 py-20 md:py-28">
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-sm tracking-[0.2em] uppercase text-primary-foreground/80 mb-4"
-          >
-            Corporate and Bulk Gifting
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.08 }}
-            className="text-4xl md:text-6xl font-heading font-bold leading-tight max-w-4xl"
-          >
-            Curated gifting programs for teams, clients, events, and festive campaigns
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.16 }}
-            className="text-primary-foreground/80 mt-6 text-lg max-w-2xl"
-          >
-            Regional food stories, premium packaging, and reliable execution across single-city and multi-location dispatches.
-          </motion.p>
-
-          <motion.div
-            variants={staggerGrid}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.5 }}
-            className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8 max-w-3xl"
-          >
-            {[
-              "MOQ from 50 units",
-              "Branding support",
-              "Pan-India dispatch",
-              "Global gifting",
-            ].map((item) => (
-              <motion.div
-                key={item}
-                variants={riseIn}
-                whileHover={{ y: -3, scale: 1.02 }}
-                className="rounded-xl border border-primary-foreground/30 bg-primary-foreground/10 px-3 py-2 text-xs sm:text-sm font-medium"
+          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(330px,420px)]">
+            <div>
+              <motion.p
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-sm tracking-[0.2em] uppercase text-primary-foreground/80 mb-4"
               >
-                {item}
-              </motion.div>
-            ))}
-          </motion.div>
+                Corporate and Bulk Gifting
+              </motion.p>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.08 }}
+                className="text-4xl md:text-6xl font-heading font-bold leading-tight max-w-4xl"
+              >
+                Curated gifting programs for teams, clients, events, and festive campaigns
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.16 }}
+                className="text-primary-foreground/80 mt-6 text-lg max-w-2xl"
+              >
+                International-first gifting with customs-ready documentation, destination-safe packaging, and reliable cross-border execution.
+              </motion.p>
 
-          <div className="flex flex-wrap gap-4 mt-8">
-            <motion.button
-              type="button"
-              onClick={scrollToForm}
-              whileHover={{ y: -2, scale: 1.01 }}
-              whileTap={{ scale: 0.98 }}
-              className="bg-secondary text-secondary-foreground px-7 py-3 rounded-xl font-semibold"
+              <motion.div
+                variants={staggerGrid}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.5 }}
+                className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8 max-w-3xl"
+              >
+                {[
+                  "MOQ from 50 units",
+                  "Branding support",
+                  "Customs-compliant lanes",
+                  "International gifting",
+                ].map((item) => (
+                  <motion.div
+                    key={item}
+                    variants={riseIn}
+                    whileHover={{ y: -3, scale: 1.02 }}
+                    className="rounded-xl border border-primary-foreground/30 bg-primary-foreground/10 px-3 py-2 text-xs sm:text-sm font-medium"
+                  >
+                    {item}
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              <div className="flex flex-wrap gap-4 mt-8">
+                <motion.button
+                  type="button"
+                  onClick={scrollToForm}
+                  whileHover={{ y: -2, scale: 1.01 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="bg-secondary text-secondary-foreground px-7 py-3 rounded-xl font-semibold"
+                >
+                  Request Call Back
+                </motion.button>
+                <motion.a
+                  href={WHATSAPP_LINK}
+                  target="_blank"
+                  rel="noreferrer"
+                  whileHover={{ y: -2, scale: 1.01 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="border border-primary-foreground/40 px-7 py-3 rounded-xl font-semibold hover:bg-primary-foreground/10 transition-colors"
+                >
+                  WhatsApp Team
+                </motion.a>
+              </div>
+            </div>
+
+            <motion.aside
+              initial={{ opacity: 0, x: 30, scale: 0.98 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              transition={{ delay: 0.18, duration: 0.55, ease: [0.2, 0.8, 0.2, 1] }}
+              className="relative hidden lg:block"
             >
-              Request Call Back
-            </motion.button>
-            <motion.a
-              href={WHATSAPP_LINK}
-              target="_blank"
-              rel="noreferrer"
-              whileHover={{ y: -2, scale: 1.01 }}
-              whileTap={{ scale: 0.98 }}
-              className="border border-primary-foreground/40 px-7 py-3 rounded-xl font-semibold hover:bg-primary-foreground/10 transition-colors"
-            >
-              WhatsApp Team
-            </motion.a>
+              <motion.div
+                className="absolute -inset-6 rounded-[34px] bg-gradient-to-br from-secondary/35 via-primary-foreground/10 to-accent/20 blur-2xl"
+                animate={{ opacity: [0.45, 0.7, 0.45], scale: [1, 1.03, 1] }}
+                transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <div className="relative rounded-[28px] border border-primary-foreground/25 bg-primary-foreground/[0.09] p-5 backdrop-blur-xl shadow-[0_26px_46px_-32px_rgba(0,0,0,0.55)]">
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-primary-foreground/80">International Control Tower</p>
+                  <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200/40 bg-emerald-300/20 px-2.5 py-1 text-[10px] font-semibold">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 animate-pulse" />
+                    Global Sync
+                  </span>
+                </div>
+
+                <div className="mb-3 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+                  <div className="flex animate-marquee gap-2 whitespace-nowrap">
+                    {[...globalLanePills, ...globalLanePills].map((code, idx) => (
+                      <span
+                        key={`${code}-${idx}`}
+                        className="inline-flex items-center rounded-full border border-primary-foreground/25 bg-primary-foreground/12 px-2.5 py-1 text-[10px] font-semibold tracking-[0.08em]"
+                      >
+                        {code}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-2.5">
+                  {internationalDispatchLanes.map((item, idx) => (
+                    <motion.div
+                      key={`${item.code}-${item.route}`}
+                      animate={{ y: [0, -3, 0], opacity: [0.8, 1, 0.8] }}
+                      transition={{ duration: 2.8 + idx * 0.35, delay: idx * 0.2, repeat: Infinity, ease: "easeInOut" }}
+                      className="relative overflow-hidden rounded-xl border border-primary-foreground/20 bg-background/85 px-3 py-2.5 text-foreground"
+                    >
+                      <motion.div
+                        className="pointer-events-none absolute inset-y-0 -left-14 w-10 bg-gradient-to-r from-transparent via-primary/35 to-transparent"
+                        animate={{ x: [-40, 230] }}
+                        transition={{ duration: 2.4 + idx * 0.25, delay: idx * 0.3, repeat: Infinity, ease: "linear" }}
+                      />
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="text-xs font-semibold text-foreground/90">{item.route}</p>
+                        <span className="text-[10px] text-muted-foreground">{item.eta}</span>
+                      </div>
+                      <div className="mt-1.5 flex items-center justify-between gap-2 text-[11px]">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 font-semibold text-primary">
+                          {item.code}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5 text-primary">
+                        <Truck className="w-3.5 h-3.5" />
+                          <span>{item.state}</span>
+                        </span>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-3 gap-2 mt-4">
+                  {[
+                    { value: "98%", label: "On-time" },
+                    { value: "24h", label: "Pack SLA" },
+                    { value: "30+", label: "Countries" },
+                  ].map((metric, idx) => (
+                    <motion.div
+                      key={metric.label}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 + idx * 0.08 }}
+                      className="rounded-lg border border-primary-foreground/20 bg-primary-foreground/10 px-2 py-2 text-center"
+                    >
+                      <p className="text-sm font-bold">{metric.value}</p>
+                      <p className="text-[10px] text-primary-foreground/80">{metric.label}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.aside>
           </div>
         </div>
       </section>
