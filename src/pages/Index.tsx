@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Leaf, Heart, Shield, ArrowRight, Star, Truck, Clock, Award, Quote } from "lucide-react";
-import { motion } from "framer-motion";
+import { Leaf, Heart, Shield, ArrowRight, Star, Truck, Clock, Award, Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import heroBanner from "@/assets/hero-banner.jpg";
 import picklesImg from "@/assets/category-pickles.jpg";
 import odiyaluImg from "@/assets/category-odiyalu.jpg";
@@ -26,11 +26,11 @@ const whyChoose = [
 
 const marqueeItems = [
   { icon: Truck, text: "Pan-India Delivery" },
-  { icon: Leaf, text: "No Preservatives" },
-  { icon: Clock, text: "Dispatch Within 48 Hours" },
-  { icon: Award, text: "100% Homemade" },
-  { icon: Heart, text: "Loved by 10,000+ Families" },
-  { icon: Shield, text: "Quality Guaranteed" },
+  { icon: Leaf, text: "No-Preservative Vibes" },
+  { icon: Clock, text: "Dispatch in 48 Hours, No Stress" },
+  { icon: Award, text: "100% Homemade Energy" },
+  { icon: Heart, text: "Fav by 10,000+ Families" },
+  { icon: Shield, text: "Quality Check, No Cap" },
 ];
 
 const testimonials = [
@@ -69,6 +69,17 @@ const podiluProducts = products.filter(p => p.category === "podilu");
 const specialProducts = products.filter(p => p.category === "special");
 
 const Index = () => {
+  const [featuredReview, setFeaturedReview] = useState(0);
+  const [pauseFeaturedReview, setPauseFeaturedReview] = useState(false);
+
+  useEffect(() => {
+    if (pauseFeaturedReview) return;
+    const timer = window.setInterval(() => {
+      setFeaturedReview((prev) => (prev + 1) % testimonials.length);
+    }, 3500);
+    return () => window.clearInterval(timer);
+  }, [pauseFeaturedReview]);
+
   return (
     <main>
       {/* Hero */}
@@ -92,6 +103,19 @@ const Index = () => {
             >
               Annapurna Home Foods
             </motion.p>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {["Fresh Drop", "No Cap Homemade", "Snack Mood: ON"].map((tag, i) => (
+                <motion.span
+                  key={tag}
+                  initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.35, delay: 0.38 + i * 0.08 }}
+                  className="px-3 py-1 rounded-full border border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground text-xs font-semibold tracking-wide backdrop-blur-sm"
+                >
+                  {tag}
+                </motion.span>
+              ))}
+            </div>
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -106,7 +130,7 @@ const Index = () => {
               transition={{ duration: 0.6, delay: 0.7 }}
               className="text-primary-foreground/80 text-lg md:text-xl leading-relaxed mb-8 max-w-md"
             >
-              Authentic South Indian homemade foods crafted with tradition, care, and the finest natural ingredients.
+              Authentic South Indian homemade foods crafted with tradition, care, and full flavor energy. No shortcuts, only real taste.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -261,14 +285,14 @@ const Index = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8, ease }}
-            className="relative"
+            className="relative w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[440px] mx-auto lg:mx-0"
           >
-            <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-lg">
+            <div className="aspect-[5/6] sm:aspect-[4/5] rounded-3xl overflow-hidden shadow-lg">
               <img src={aboutStory} alt="Our traditional kitchen" className="w-full h-full object-cover" loading="lazy" />
             </div>
-            <div className="absolute -bottom-6 -right-6 bg-secondary text-secondary-foreground px-6 py-4 rounded-2xl shadow-lg hidden md:block">
-              <p className="font-heading text-3xl font-bold">25+</p>
-              <p className="text-sm font-medium">Years of Tradition</p>
+            <div className="absolute -bottom-5 -right-4 bg-secondary text-secondary-foreground px-5 py-3 rounded-2xl shadow-lg hidden md:block">
+              <p className="font-heading text-2xl font-bold">25+</p>
+              <p className="text-xs font-medium">Years of Tradition</p>
             </div>
           </motion.div>
           <motion.div
@@ -312,52 +336,149 @@ const Index = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="bg-card">
-        <div className="container mx-auto px-4 py-16 md:py-24">
+      <section className="relative overflow-hidden bg-card">
+        <motion.div
+          className="pointer-events-none absolute -top-20 -left-16 h-64 w-64 rounded-full bg-primary/15 blur-3xl"
+          animate={{ x: [0, 18, 0], y: [0, -12, 0] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-secondary/20 blur-3xl"
+          animate={{ x: [0, -18, 0], y: [0, 10, 0] }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
           <motion.div
             className="text-center mb-12"
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
-            variants={fadeUp}
-            custom={0}
+            transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-3">Loved by Families</h2>
-            <p className="text-muted-foreground max-w-md mx-auto">Real reviews from our happy customers across India</p>
+            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1 text-xs font-semibold tracking-wide text-primary mb-4">
+              <Star className="w-3.5 h-3.5 fill-secondary text-secondary" />
+              Real Customer Energy
+            </div>
+            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-3">Loved by Families</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">Voices from homes that now cook, snack, and celebrate with Annapurna flavors.</p>
           </motion.div>
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={staggerContainer}
-          >
-            {testimonials.map((t, i) => (
+
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] gap-7 lg:gap-8 items-start">
+            <motion.article
+              initial={{ opacity: 0, y: 26, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.55 }}
+              onMouseEnter={() => setPauseFeaturedReview(true)}
+              onMouseLeave={() => setPauseFeaturedReview(false)}
+              className="relative min-w-0 rounded-3xl border border-primary/20 bg-background p-7 md:p-8 shadow-[0_16px_40px_-18px_rgba(15,65,45,0.35)] overflow-hidden"
+            >
               <motion.div
-                key={i}
-                variants={fadeUp}
-                custom={i}
-                className="bg-background rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow relative"
-              >
-                <Quote className="w-8 h-8 text-primary/15 absolute top-4 right-4" />
-                <div className="flex gap-0.5 mb-3">
-                  {Array.from({ length: t.rating }).map((_, si) => (
-                    <Star key={si} className="w-4 h-4 fill-secondary text-secondary" />
+                className="absolute -top-6 -right-6 w-28 h-28 rounded-full bg-secondary/30"
+                animate={{ scale: [1, 1.08, 1], rotate: [0, 8, 0] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute -bottom-8 -left-8 w-24 h-24 rounded-full border border-primary/20"
+                animate={{ y: [0, -7, 0], x: [0, 7, 0] }}
+                transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              <div className="relative">
+                <div className="flex items-center justify-between mb-5">
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                    Spotlight Review
+                  </div>
+                  <Quote className="w-9 h-9 text-primary/20" />
+                </div>
+
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`${testimonials[featuredReview].name}-${featuredReview}`}
+                    initial={{ opacity: 0, y: 22, scale: 0.97, rotateX: 8 }}
+                    animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+                    exit={{ opacity: 0, y: -16, scale: 0.97 }}
+                    transition={{ duration: 0.45, ease }}
+                  >
+                    <div className="flex gap-0.5 mb-4">
+                      {Array.from({ length: testimonials[featuredReview].rating }).map((_, si) => (
+                        <Star key={`feature-star-${si}`} className="w-4 h-4 fill-secondary text-secondary" />
+                      ))}
+                    </div>
+                    <p className="text-foreground text-base md:text-lg leading-relaxed mb-6">
+                      "{testimonials[featuredReview].text}"
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-11 h-11 rounded-full bg-primary/15 flex items-center justify-center text-primary font-bold">
+                        {testimonials[featuredReview].name.charAt(0)}
+                      </div>
+                      <div>
+                        <p className="font-semibold text-foreground">{testimonials[featuredReview].name}</p>
+                        <p className="text-muted-foreground text-sm">{testimonials[featuredReview].location}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+
+                <div className="mt-6 flex items-center gap-2">
+                  {testimonials.map((_, i) => (
+                    <button
+                      key={`review-dot-${i}`}
+                      type="button"
+                      onClick={() => setFeaturedReview(i)}
+                      className={`h-1.5 rounded-full transition-all ${featuredReview === i ? "w-8 bg-primary" : "w-3 bg-border hover:bg-primary/50"}`}
+                      aria-label={`Show review ${i + 1}`}
+                    />
                   ))}
                 </div>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4">"{t.text}"</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
-                    {t.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="font-semibold text-foreground text-sm">{t.name}</p>
-                    <p className="text-muted-foreground text-xs">{t.location}</p>
-                  </div>
+              </div>
+            </motion.article>
+
+            <div className="space-y-4 min-w-0 overflow-hidden">
+              <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+                <div className="flex animate-marquee gap-4 whitespace-nowrap">
+                  {[...testimonials, ...testimonials].map((t, i) => (
+                    <motion.article
+                      key={`line-a-${t.name}-${i}`}
+                      whileHover={{ y: -6, scale: 1.02 }}
+                      className="min-w-[280px] rounded-2xl border border-border bg-background p-4 shadow-sm"
+                    >
+                      <div className="flex gap-0.5 mb-2">
+                        {Array.from({ length: t.rating }).map((_, si) => (
+                          <Star key={`line-a-star-${i}-${si}`} className="w-3.5 h-3.5 fill-secondary text-secondary" />
+                        ))}
+                      </div>
+                      <p className="text-sm text-foreground/90 line-clamp-2">"{t.text}"</p>
+                      <p className="text-xs text-muted-foreground mt-3 font-medium">{t.name}, {t.location}</p>
+                    </motion.article>
+                  ))}
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
+              </div>
+
+              <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+                <div className="flex animate-marquee-reverse gap-4 whitespace-nowrap">
+                  {[...testimonials, ...testimonials].map((t, i) => (
+                    <motion.article
+                      key={`line-b-${t.name}-${i}`}
+                      whileHover={{ y: -6, scale: 1.02 }}
+                      className="min-w-[280px] rounded-2xl border border-border bg-background p-4 shadow-sm"
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex gap-0.5">
+                          {Array.from({ length: t.rating }).map((_, si) => (
+                            <Star key={`line-b-star-${i}-${si}`} className="w-3.5 h-3.5 fill-secondary text-secondary" />
+                          ))}
+                        </div>
+                        <Quote className="w-4 h-4 text-primary/25" />
+                      </div>
+                      <p className="text-sm text-foreground/90 line-clamp-2">"{t.text}"</p>
+                      <p className="text-xs text-muted-foreground mt-3 font-medium">{t.name}, {t.location}</p>
+                    </motion.article>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -443,7 +564,7 @@ const Index = () => {
   );
 };
 
-/* Reusable Category Showcase Component — single-row horizontal scroll */
+/* Reusable Category Showcase Component - single-row auto slider */
 const CategoryShowcase = ({
   title,
   subtitle,
@@ -457,22 +578,44 @@ const CategoryShowcase = ({
   categorySlug: string;
   bgClass?: string;
 }) => {
-  const [dragConstraint, setDragConstraint] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const getItemsPerView = () => {
+    if (typeof window === "undefined") return 4;
+    if (window.innerWidth >= 1024) return 4;
+    if (window.innerWidth >= 768) return 3;
+    if (window.innerWidth >= 640) return 2;
+    return 1;
+  };
+
+  const [itemsPerView, setItemsPerView] = useState(getItemsPerView);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const totalItems = Math.max(1, categoryProducts.length);
+  const visibleItems = Math.min(itemsPerView, Math.max(1, categoryProducts.length));
+  const maxIndex = Math.max(0, categoryProducts.length - visibleItems);
+  const showSliderControls = maxIndex > 0;
 
   useEffect(() => {
-    const updateConstraint = () => {
-      if (containerRef.current && scrollRef.current) {
-        const scrollW = scrollRef.current.scrollWidth;
-        const containerW = containerRef.current.offsetWidth;
-        setDragConstraint(Math.min(0, -(scrollW - containerW)));
-      }
-    };
-    updateConstraint();
-    window.addEventListener("resize", updateConstraint);
-    return () => window.removeEventListener("resize", updateConstraint);
-  }, [categoryProducts]);
+    const updateItemsPerView = () => setItemsPerView(getItemsPerView());
+    updateItemsPerView();
+    window.addEventListener("resize", updateItemsPerView);
+    return () => window.removeEventListener("resize", updateItemsPerView);
+  }, []);
+
+  useEffect(() => {
+    setActiveIndex((prev) => Math.min(prev, maxIndex));
+  }, [maxIndex]);
+
+  useEffect(() => {
+    if (!showSliderControls || isPaused) return;
+    const timer = window.setInterval(() => {
+      setActiveIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+    }, 2800);
+    return () => window.clearInterval(timer);
+  }, [maxIndex, showSliderControls, isPaused]);
+
+  const goPrev = () => setActiveIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+  const goNext = () => setActiveIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
 
   return (
     <section className={bgClass}>
@@ -489,20 +632,42 @@ const CategoryShowcase = ({
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-2">{title}</h2>
             <p className="text-muted-foreground max-w-md">{subtitle}</p>
           </div>
-          <Link
-            to={`/products/${categorySlug}`}
-            className="text-primary font-semibold inline-flex items-center gap-2 hover:gap-3 transition-all text-sm shrink-0"
-          >
-            View All <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="flex items-center gap-3 md:gap-4 shrink-0">
+            {showSliderControls && (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={goPrev}
+                  aria-label={`Previous ${title} products`}
+                  className="w-9 h-9 rounded-full border border-border bg-background text-foreground hover:bg-muted transition-colors inline-flex items-center justify-center"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={goNext}
+                  aria-label={`Next ${title} products`}
+                  className="w-9 h-9 rounded-full border border-border bg-background text-foreground hover:bg-muted transition-colors inline-flex items-center justify-center"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+            <Link
+              to={`/products/${categorySlug}`}
+              className="text-primary font-semibold inline-flex items-center gap-2 hover:gap-3 transition-all text-sm"
+            >
+              View All <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </motion.div>
-        <div ref={containerRef} className="overflow-hidden cursor-grab active:cursor-grabbing">
+        <div
+          className="overflow-hidden"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
           <motion.div
-            ref={scrollRef}
-            className="flex gap-6"
-            drag="x"
-            dragConstraints={{ left: dragConstraint, right: 0 }}
-            dragElastic={0.1}
+            className="flex -mx-2 sm:-mx-3"
+            animate={{ x: `-${(activeIndex * 100) / totalItems}%` }}
+            transition={{ duration: 0.65, ease }}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
@@ -513,9 +678,10 @@ const CategoryShowcase = ({
                 key={product.id}
                 variants={fadeUp}
                 custom={i}
-                className="min-w-[260px] sm:min-w-[280px] md:min-w-[300px] flex-shrink-0"
+                style={{ flex: `0 0 ${100 / visibleItems}%` }}
+                className="px-2 sm:px-3 flex-shrink-0"
               >
-                <ProductCard product={product} />
+                <ProductCard product={product} compactMedia />
               </motion.div>
             ))}
           </motion.div>
@@ -526,3 +692,4 @@ const CategoryShowcase = ({
 };
 
 export default Index;
+

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { products, categories } from "@/data/products";
@@ -6,6 +6,39 @@ import ProductCard from "@/components/ProductCard";
 
 type SpiceFilter = "all" | "mild" | "medium" | "hot";
 type SortOption = "default" | "low" | "high";
+
+const categoryAliasMap: Record<string, (typeof categories)[number]["slug"] | undefined> = {
+  "shop-all": undefined,
+  snacks: "special",
+  sweets: "special",
+  combos: "special",
+  "tamil-nadu-sweets-snacks": "special",
+  "tamil-nadu-sweets": "special",
+  "tamil-nadu-snacks": "special",
+  groceries: "podilu",
+  "ghee-and-masala": "podilu",
+  "podi-masala-ghee": "podilu",
+  pickles: "pickles",
+  "south-indian-homemade-pickle": "pickles",
+  "andhra-pickle": "pickles",
+  "all-pickles": "pickles",
+  podis: "podilu",
+  "masalas-podis": "podilu",
+  podilu: "podilu",
+  odiyalu: "odiyalu",
+  fryums: "odiyalu",
+  "vathals-fryums": "odiyalu",
+  coffee: "special",
+  "coffee-beverages": "special",
+  "coffee-and-tea": "special",
+  honey: "special",
+  "wild-honey": "special",
+  "western-ghats-honey-aligned-products": "special",
+  "ready-mix": "special",
+  "ready-to-cook": "special",
+  "ready-to-cook-beverages": "special",
+  "multigrain-dosa-health-mixes": "special",
+};
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -17,29 +50,58 @@ const Products = () => {
   const [spiceFilter, setSpiceFilter] = useState<SpiceFilter>("all");
   const [sort, setSort] = useState<SortOption>("default");
 
-  const cat = categories.find((c) => c.slug === category);
+  const resolvedCategory = category
+    ? categoryAliasMap[category] ?? categories.find((c) => c.slug === category)?.slug
+    : undefined;
+
+  const cat = categories.find((c) => c.slug === resolvedCategory);
   const title = cat ? cat.name : "All Products";
 
   const filtered = useMemo(() => {
-    let list = category ? products.filter((p) => p.category === category) : products;
+    let list = resolvedCategory ? products.filter((p) => p.category === resolvedCategory) : products;
     if (spiceFilter !== "all") list = list.filter((p) => p.spiceLevel === spiceFilter);
     if (sort === "low") list = [...list].sort((a, b) => a.price - b.price);
     if (sort === "high") list = [...list].sort((a, b) => b.price - a.price);
     return list;
-  }, [category, spiceFilter, sort]);
+  }, [resolvedCategory, spiceFilter, sort]);
 
   return (
     <main className="container mx-auto px-4 py-10 md:py-16">
       <motion.div className="mb-10" initial="hidden" animate="visible" variants={fadeUp}>
-        <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground">{title}</h1>
+        <p className="uppercase text-xs tracking-[0.18em] text-primary mb-3">
+          {category ? "Collection" : "Shop"}
+        </p>
+        <h1 className="text-3xl md:text-5xl font-heading font-bold text-foreground">{title}</h1>
         <p className="text-muted-foreground mt-2">
           {filtered.length} product{filtered.length !== 1 ? "s" : ""} available
         </p>
       </motion.div>
 
+      <div className="flex flex-wrap gap-2 mb-7">
+        <Link
+          to="/products"
+          className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+            !resolvedCategory ? "bg-primary text-primary-foreground" : "bg-card border border-border text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          All
+        </Link>
+        {categories.map((c) => (
+          <Link
+            key={c.slug}
+            to={`/products/${c.slug}`}
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+              resolvedCategory === c.slug ? "bg-primary text-primary-foreground" : "bg-card border border-border text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {c.name}
+          </Link>
+        ))}
+      </div>
+
       {/* Filters */}
       <motion.div
-        className="flex flex-wrap gap-3 mb-8"
+        className="flex flex-wrap gap-3 mb-8 bg-card border border-border rounded-2xl p-4"
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -65,7 +127,7 @@ const Products = () => {
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as SortOption)}
-            className="bg-muted text-foreground text-sm px-3 py-1.5 rounded-lg border-none outline-none"
+            className="bg-background border border-border text-foreground text-sm px-3 py-1.5 rounded-lg outline-none"
           >
             <option value="default">Default</option>
             <option value="low">Price: Low to High</option>

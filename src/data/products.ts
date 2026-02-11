@@ -38,6 +38,7 @@ export interface Product {
   storage: string;
   spiceLevel: "mild" | "medium" | "hot";
   isVeg: boolean;
+  inStock?: boolean;
 }
 
 export const categories = [
