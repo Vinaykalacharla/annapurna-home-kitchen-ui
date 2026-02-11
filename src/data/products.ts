@@ -31,6 +31,8 @@ export interface Product {
   price: number;
   weight: string;
   image: string;
+  hoverImage?: string;
+  hoverVideo?: string;
   video: string;
   description: string;
   ingredients: string;

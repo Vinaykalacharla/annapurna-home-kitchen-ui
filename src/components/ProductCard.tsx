@@ -4,6 +4,7 @@ import { Star, BadgeCheck, ChevronDown, Loader2 } from "lucide-react";
 import { Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { toast } from "sonner";
+import ProductMediaSwap from "@/components/ProductMediaSwap";
 
 interface ProductCardProps {
   product: Product;
@@ -75,14 +76,18 @@ const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <article className="group mx-auto w-full max-w-[320px] rounded-[20px] bg-white p-4 [font-family:Inter,Poppins,Manrope,sans-serif] shadow-[0px_8px_24px_rgba(0,0,0,0.06)] transition-[box-shadow,transform] duration-200 hover:shadow-[0px_14px_30px_rgba(0,0,0,0.10)]">
       <div className="relative mb-3">
-        <Link to={`/product/${product.id}`} className="block">
-          <img
-            src={product.image}
-            alt={product.name}
-            loading="lazy"
-            className="h-[260px] w-full rounded-[16px] bg-[#F6F6F6] object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-          />
-        </Link>
+        <ProductMediaSwap
+          to={`/product/${product.id}`}
+          primarySrc={product.image}
+          primaryAlt={product.name}
+          secondary={
+            product.hoverVideo || product.video
+              ? { kind: "video", src: product.hoverVideo ?? product.video, poster: product.image }
+              : product.hoverImage
+                ? { kind: "image", src: product.hoverImage, alt: `${product.name} alternate view` }
+                : undefined
+          }
+        />
         {discountPercent > 0 && (
           <span className="absolute left-3 top-3 rounded-full bg-[#113d34] px-2.5 py-1 text-[11px] font-semibold leading-none tracking-[0.2px] text-white">
             {discountPercent}% OFF
