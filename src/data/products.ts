@@ -5,11 +5,14 @@ import productTomatoPickle from "@/assets/product-tomato-pickle.jpg";
 import productRiceSandige from "@/assets/product-rice-sandige.jpg";
 import productUradOdiyalu from "@/assets/product-urad-odiyalu.jpg";
 import productSaggubiyyam from "@/assets/product-saggubiyyam.jpg";
-import productKandiPodi from "@/assets/product-kandi-podi.jpg";
-import productNuvvulaPodi from "@/assets/product-nuvvula-podi.jpg";
-import productKarapodi from "@/assets/product-karapodi.jpg";
+import productKandiPodi from "@/assets/product-kandi-podi.png";
+import productNuvvulaPodi from "@/assets/product-nuvvula-podi.png";
+import productKarapodi from "@/assets/product-karapodi.png";
+import productChittiKaja from "@/assets/product-chitti-kaja.png";
+import productSambharPodi from "@/assets/product-sambhar-podi.png";
 import productBellamGavvalu from "@/assets/product-bellam-gavvalu.jpg";
 import productChegodilu from "@/assets/product-chegodilu.jpg";
+import productRavvaLaddu from "@/assets/product-ravva-laddu.png";
 
 import videoAvakaya from "@/assets/product-avakaya.mp4";
 import videoLemonPickle from "@/assets/product-lemon-pickle.mp4";
@@ -21,6 +24,7 @@ import videoSaggubiyyam from "@/assets/product-saggubiyyam.mp4";
 import videoKandiPodi from "@/assets/product-kandi-podi.mp4";
 import videoNuvvulaPodi from "@/assets/product-nuvvula-podi.mp4";
 import videoKarapodi from "@/assets/product-karapodi.mp4";
+import videoRedChilliPowder from "@/assets/product-red-chilli-powder.mp4";
 import videoBellamGavvalu from "@/assets/product-bellam-gavvalu.mp4";
 import videoChegodilu from "@/assets/product-chegodilu.mp4";
 
@@ -268,12 +272,12 @@ export const products: Product[] = [
   },
   {
     id: "p9",
-    name: "Nuvvula Podi",
+    name: "Red Chilli Powder",
     category: "podilu",
     price: 199,
     weight: "200g",
     image: productNuvvulaPodi,
-    video: videoNuvvulaPodi,
+    video: videoRedChilliPowder,
     description: "Fragrant sesame seed powder with dry red chilies. Rich in nutrients, perfect with hot rice and a drizzle of ghee.",
     ingredients: "Sesame seeds, red chili, salt, cumin",
     shelfLife: "4 months",
@@ -298,11 +302,11 @@ export const products: Product[] = [
   },
   {
     id: "p19",
-    name: "Palli Podi",
+    name: "Sambhar Podi",
     category: "podilu",
     price: 189,
     weight: "200g",
-    image: productKandiPodi,
+    image: productSambharPodi,
     video: videoKandiPodi,
     description: "Roasted peanut powder with red chilies and garlic. Crunchy, nutty, and irresistibly flavorful with hot rice.",
     ingredients: "Peanuts, red chili, garlic, cumin, salt",
@@ -360,11 +364,11 @@ export const products: Product[] = [
   },
   {
     id: "p12",
-    name: "Chegodilu",
+    name: "RAVVA LADDU",
     category: "special",
     price: 249,
     weight: "250g",
-    image: productChegodilu,
+    image: productRavvaLaddu,
     video: videoChegodilu,
     description: "Crunchy ring-shaped savory snack made with rice flour and sesame seeds. The perfect tea-time companion.",
     ingredients: "Rice flour, sesame seeds, cumin, butter, salt",
@@ -375,11 +379,11 @@ export const products: Product[] = [
   },
   {
     id: "p22",
-    name: "Ariselu",
+    name: "CHITTI KAJA",
     category: "special",
     price: 399,
     weight: "300g",
-    image: productBellamGavvalu,
+    image: productChittiKaja,
     video: videoBellamGavvalu,
     description: "Traditional deep-fried rice flour sweet soaked in jaggery. A must-have during Sankranti and festive occasions.",
     ingredients: "Rice flour, jaggery, sesame seeds, ghee, cardamom",

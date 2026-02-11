@@ -6,7 +6,7 @@ import picklesImg from "@/assets/category-pickles.jpg";
 import odiyaluImg from "@/assets/category-odiyalu.jpg";
 import podiluImg from "@/assets/category-podilu.jpg";
 import specialImg from "@/assets/category-special.jpg";
-import kandiPodiImg from "@/assets/product-kandi-podi.jpg";
+import kandiPodiImg from "@/assets/product-kandi-podi.png";
 
 type MenuLink = { to: string; label: string; blurb?: string };
 type VisualCard = { to: string; label: string; caption: string; image: string };
