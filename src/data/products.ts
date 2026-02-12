@@ -1,4 +1,4 @@
-import productAvakaya from "@/assets/product-avakaya.jpg";
+import productAvakaya from "@/assets/product-avakaya.png";
 import productLemonPickle from "@/assets/product-lemon-pickle.jpg";
 import productGongura from "@/assets/product-gongura.jpg";
 import productTomatoPickle from "@/assets/product-tomato-pickle.jpg";
