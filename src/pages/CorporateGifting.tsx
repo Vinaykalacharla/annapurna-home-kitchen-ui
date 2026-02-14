@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from "react";
+﻿import { FormEvent, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView, type Variants } from "framer-motion";
 import {
@@ -23,8 +23,8 @@ import {
   Pause,
 } from "lucide-react";
 import { toast } from "sonner";
-import picklesImg from "@/assets/category-pickles.jpg";
-import odiyaluImg from "@/assets/category-odiyalu.jpg";
+import picklesImg from "@/assets/category-pickles.png";
+import odiyaluImg from "@/assets/category-odiyalu.png";
 import podiluImg from "@/assets/category-podilu.jpg";
 import specialImg from "@/assets/category-special.jpg";
 import aboutStory from "@/assets/about-story.jpg";
@@ -900,3 +900,4 @@ const CorporateGifting = () => {
 };
 
 export default CorporateGifting;
+

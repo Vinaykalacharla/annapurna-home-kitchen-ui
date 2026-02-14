@@ -1,9 +1,9 @@
-import { Link, useLocation } from "react-router-dom";
+﻿import { Link, useLocation } from "react-router-dom";
 import { ShoppingCart, Menu, X, ChevronDown, Sparkles } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useState } from "react";
-import picklesImg from "@/assets/category-pickles.jpg";
-import odiyaluImg from "@/assets/category-odiyalu.jpg";
+import picklesImg from "@/assets/category-pickles.png";
+import odiyaluImg from "@/assets/category-odiyalu.png";
 import podiluImg from "@/assets/category-podilu.jpg";
 import specialImg from "@/assets/category-special.jpg";
 import kandiPodiImg from "@/assets/product-kandi-podi.png";
@@ -390,3 +390,4 @@ const Header = () => {
 };
 
 export default Header;
+

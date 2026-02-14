@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Leaf, Heart, Shield, ArrowRight, Star, Truck, Clock, Award, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import heroBanner from "@/assets/hero-banner.jpg";
-import picklesImg from "@/assets/category-pickles.jpg";
-import odiyaluImg from "@/assets/category-odiyalu.jpg";
+import picklesImg from "@/assets/category-pickles.png";
+import odiyaluImg from "@/assets/category-odiyalu.png";
 import podiluImg from "@/assets/category-podilu.jpg";
 import specialImg from "@/assets/category-special.jpg";
 import aboutStory from "@/assets/about-story.jpg";
@@ -38,7 +38,7 @@ const testimonials = [
   { name: "Ramesh Kumar", location: "Bangalore", rating: 5, text: "Best quality podilu I've found online. The Kandi Podi with hot rice and ghee is heavenly. Will order again!" },
   { name: "Lakshmi Devi", location: "Chennai", rating: 5, text: "Ordered the Bellam Gavvalu for Sankranti. My whole family loved it. Authentic taste, perfect sweetness." },
   { name: "Suresh Babu", location: "Vijayawada", rating: 5, text: "The Chegodilu and Rice Sandige are our tea-time favorites now. Crispy, fresh, and truly homemade quality." },
-  { name: "Anita Sharma", location: "Mumbai", rating: 5, text: "Living far from home, these pickles are a blessing. The Gongura pickle is outstanding — tangy and spicy perfection!" },
+  { name: "Anita Sharma", location: "Mumbai", rating: 5, text: "Living far from home, these pickles are a blessing. The Gongura pickle is outstanding â€” tangy and spicy perfection!" },
   { name: "Venkat Rao", location: "Delhi", rating: 5, text: "Ordered for my parents and they couldn't stop praising. The Nuvvula Podi is aromatic and flavorful. 10/10!" },
 ];
 
@@ -216,7 +216,7 @@ const Index = () => {
       {/* Best Sellers - Podilu */}
       <CategoryShowcase
         title="Authentic Spice Powders"
-        subtitle="Roasted and ground fresh — the soul of every South Indian meal"
+        subtitle="Roasted and ground fresh â€” the soul of every South Indian meal"
         products={podiluProducts}
         categorySlug="podilu"
         bgClass="bg-card"
@@ -225,7 +225,7 @@ const Index = () => {
       {/* Best Sellers - Odiyalu */}
       <CategoryShowcase
         title="Crispy Sun-Dried Delicacies"
-        subtitle="Traditional odiyalu — fry them golden for the perfect crunch"
+        subtitle="Traditional odiyalu â€” fry them golden for the perfect crunch"
         products={odiyaluProducts}
         categorySlug="odiyalu"
       />
@@ -306,7 +306,7 @@ const Index = () => {
               From Our Kitchen to Your Table
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              What started as a grandmother's passion for preserving traditional Andhra recipes has blossomed into Annapurna Home Foods — a brand dedicated to bringing the authentic flavors of South India to every household.
+              What started as a grandmother's passion for preserving traditional Andhra recipes has blossomed into Annapurna Home Foods â€” a brand dedicated to bringing the authentic flavors of South India to every household.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-6">
               Every pickle, every podi, every crispy odiyalu is made by hand using recipes passed down through generations. We use only the freshest ingredients, cold-pressed oils, and sun-drying techniques to ensure you taste the tradition in every bite.
@@ -523,7 +523,7 @@ const Index = () => {
       <section className="bg-secondary/10 overflow-hidden py-3">
         <div className="flex animate-marquee-reverse whitespace-nowrap">
           {[...Array(4)].flatMap((_, ri) =>
-            ["🌶️ Avakaya", "🍋 Lemon Pickle", "🌿 Gongura", "🍅 Tomato Pickle", "🫓 Rice Sandige", "🥣 Kandi Podi", "🍯 Bellam Gavvalu", "🔥 Karapodi"].map((item, i) => (
+            ["ðŸŒ¶ï¸ Avakaya", "ðŸ‹ Lemon Pickle", "ðŸŒ¿ Gongura", "ðŸ… Tomato Pickle", "ðŸ«“ Rice Sandige", "ðŸ¥£ Kandi Podi", "ðŸ¯ Bellam Gavvalu", "ðŸ”¥ Karapodi"].map((item, i) => (
               <span key={`${ri}-${i}`} className="mx-6 text-foreground/60 text-sm font-medium">{item}</span>
             ))
           )}
@@ -710,4 +710,5 @@ const CategoryShowcase = ({
 };
 
 export default Index;
+
 

@@ -27,6 +27,7 @@ import videoKarapodi from "@/assets/product-karapodi.mp4";
 import videoRedChilliPowder from "@/assets/product-red-chilli-powder.mp4";
 import videoBellamGavvalu from "@/assets/product-bellam-gavvalu.mp4";
 import videoChegodilu from "@/assets/product-chegodilu.mp4";
+import videoChittiKaja from "@/assets/product-chitti-kaja.mp4";
 
 export interface Product {
   id: string;
@@ -384,7 +385,7 @@ export const products: Product[] = [
     price: 399,
     weight: "300g",
     image: productChittiKaja,
-    video: videoBellamGavvalu,
+    video: videoChittiKaja,
     description: "Traditional deep-fried rice flour sweet soaked in jaggery. A must-have during Sankranti and festive occasions.",
     ingredients: "Rice flour, jaggery, sesame seeds, ghee, cardamom",
     shelfLife: "1 month",
